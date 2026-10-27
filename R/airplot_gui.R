@@ -44,7 +44,7 @@ airplot_gui <- function(...) {
       sidebarMenu(
         id = "tabs",
         menuItem("Create Map", tabName = "createmap", icon = icon("map")),
-        menuItem("DAS Data", tabName = "das", icon = icon("ship")),
+        menuItem("AirDAS Data", tabName = "airdas", icon = icon("plane")),
         menuItem("Non-DAS Data", tabName = "nondas", icon = icon("layer-group")),
         menuItem(
           HTML(paste0("Color and Formatting", "<br/>", "Options")),
@@ -122,21 +122,20 @@ airplot_gui <- function(...) {
           )
         ),
         tabItem(
-          tabName = "das",
+          tabName = "airdas",
           fluidRow(
             mod_plot_ui("plot_das"),
-            # do.call(
-            #   tabBox,
-            #   c(
-            #     list(title = "DAS Data", id = "tabset2", width = 6),
-            #     mod_das_ui("das")
-            #   )
-            # )
-            tabBox(
-              title = "DAS Data", id = "tabset2", width = 6,
-              helpText("pause")
-              # mod_das_ui("das")
+            do.call(
+              tabBox,
+              c(
+                list(title = "AirDAS Data", id = "tabset2", width = 6),
+                mod_airdas_ui("airdas")
+              )
             )
+            # tabBox(
+            #   title = "DAS Data", id = "tabset2", width = 6,
+            #   mod_airdas_ui("airdas")
+            # )
           )
         ),
         tabItem(
@@ -237,7 +236,7 @@ airplot_gui <- function(...) {
     load_state_map_range <- reactiveVal()
     load_state_map_elements <- reactiveVal()
     load_state_map_color <- reactiveVal()
-    load_state_das <- reactiveVal()
+    load_state_airdas <- reactiveVal()
     load_state_ndas_shape <- reactiveVal()
     load_state_ndas_planned <- reactiveVal()
 
@@ -248,8 +247,7 @@ airplot_gui <- function(...) {
     map_elements <- mod_map_elements_server("map_elements", load_state_map_elements, map_range_config)
     map_color <- mod_map_color_server("map_color", load_state_map_color, map_range_config)
 
-    # das <- mod_das_server("das", load_state_das, color_style, map_range_config)
-    das <- NULL
+    airdas <- mod_airdas_server("airdas", load_state_airdas, color_style, map_range_config)
     nondas <- list(
       shape = mod_ndas_shape_server("ndas_shape", load_state_ndas_shape, map_range_config),
       planned = mod_ndas_planned_server("ndas_planned", load_state_ndas_planned, map_range_config)
@@ -258,15 +256,14 @@ airplot_gui <- function(...) {
     #----------------------------------------------------------------------------
     ### Dashboard-level display tabs
     mod_display_format_server("display_format")
-    # mod_display_spcodes_server("display_spcodes", das$sp_codes)
-    mod_display_spcodes_server("display_spcodes", NULL)
+    mod_display_spcodes_server("display_spcodes", airdas$sp_codes)
 
     #----------------------------------------------------------------------------
     ### Plots
-    plot1.list <- mod_plot_server("plot1", h, map_range, map_elements, map_color, nondas, das)
-    mod_plot_server("plot2", h, map_range, map_elements, map_color, nondas, das)
-    mod_plot_server("plot_ndas", h, map_range, map_elements, map_color, nondas, das)
-    mod_plot_server("plot_das", h, map_range, map_elements, map_color, nondas, das)
+    plot1.list <- mod_plot_server("plot1", h, map_range, map_elements, map_color, nondas)
+    mod_plot_server("plot2", h, map_range, map_elements, map_color, nondas)
+    mod_plot_server("plot_ndas", h, map_range, map_elements, map_color, nondas)
+    mod_plot_server("plot_das", h, map_range, map_elements, map_color, nondas)
 
     # plot_input_list <- list(
     #   h, map_range, map_elements, map_color, nondas
@@ -293,7 +290,7 @@ airplot_gui <- function(...) {
             map_range = map_range$to_save(),
             map_elements = map_elements$to_save(),
             map_color = map_color$to_save(),
-            # das = das$to_save(),
+            airdas = airdas$to_save(),
             ndas_shape = nondas$shape$to_save(),
             ndas_planned = nondas$planned$to_save(),
             color_style = input$color_style,
@@ -338,14 +335,14 @@ airplot_gui <- function(...) {
         load_state_map_range(NULL)
         load_state_map_elements(NULL)
         load_state_map_color(NULL)
-        # load_state_das(NULL)
+        load_state_airdas(NULL)
         load_state_ndas_shape(NULL)
         load_state_ndas_planned(NULL)
 
         load_state_map_range(app_state_save[["map_range"]])
         load_state_map_elements(app_state_save[["map_elements"]])
         load_state_map_color(app_state_save[["map_color"]])
-        # load_state_das(app_state_save[["das"]])
+        load_state_airdas(app_state_save[["airdas"]])
         load_state_ndas_shape(app_state_save[["ndas_shape"]])
         load_state_ndas_planned(app_state_save[["ndas_planned"]])
         incProgress(0.35)
