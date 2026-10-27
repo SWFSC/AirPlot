@@ -1,0 +1,48 @@
+# AirPlot
+
+<!-- badges: start -->
+
+<!-- [![CRAN version](https://www.r-pkg.org/badges/version/CruzPlot)](https://cran.r-project.org/package=CruzPlot)
+[![R-CMD-check](https://github.com/SWFSC/CruzPlot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SWFSC/CruzPlot/actions/workflows/R-CMD-check.yaml) -->
+<!-- badges: end -->
+
+AirPlot is an R package that contains a GUI for creating maps, plotting data, and performing basic data summaries from data files in the "AirDAS" format, typically produced by... However, see the [swfscAirDAS](https://github.com/SWFSC/swfscAirDAS/) for more discussion around AirDAS data.
+
+## Installation
+
+<!-- You can install the released version of CruzPlot from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("CruzPlot")
+``` -->
+
+You can install the developmental version of AirPlot from [GitHub](https://github.com/). To use the development version of AirPlot, it is recommended to also install the development versions of [swfscAirDAS](https://swfsc.github.io/swfscAirDAS/index.html) and [CruzPlot](https://swfsc.github.io/CruzPlot/index.html):
+
+``` r
+# install.packages("pak") # Install remotes package if needed
+pak::pkg_install("SWFSC/swfscAirDAS")
+pak::pkg_install("SWFSC/CruzPlot@modules")
+pak::pkg_install("SWFSC/AirPlot")
+```
+
+After updating AirPlot, it is recommended to create and save new workspaces, rather than using workspaces saved with a previous version of AirPlot. Please submit an issue if you run into trouble.
+
+## Running AirPlot
+
+<!-- If you have a stable internet connection, you can access CruzPlot online at <https://connect.fisheries.noaa.gov/CruzPlot>. You do not need to have R or RStudio installed to access CruzPlot online. -->
+
+To open and run AirPlot locally on your computer, run the following code in RStudio:
+
+``` r
+AirPlot::airplot_gui()
+```
+
+If text or images overlap within the AirPlot window, you can make the browser window full screen or adjust the text size in your browser (e.g., Ctrl - minus ('-') on Windows systems)
+
+<!-- ## AirPlot manual
+
+The CruzPlot manual can be downloaded [at this link](https://github.com/swfsc/CruzPlot/blob/master/inst/shiny/www/CruzPlot_Manual_app.pdf), or accessed when running CruzPlot by opening the “CruzPlot Manual” page. It is recommended for new users to read the first two pages of the manual for orientation purposes; the rest of the manual contains section-specific information (formatting requirements, etc.) and can be read on an as-needed basis. -->
+
+## Disclaimer
+
+This repository is a scientific product and is not official communication of the National Oceanic and Atmospheric Administration, or the United States Department of Commerce. All NOAA GitHub project code is provided on an ‘as is’ basis and the user assumes responsibility for its use. Any claims against the Department of Commerce or Department of Commerce bureaus stemming from the use of this GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.

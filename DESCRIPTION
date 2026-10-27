@@ -1,0 +1,23 @@
+Package: AirPlot
+Title: Plot Aerial Survey Data
+Version: 0.1.0.9000
+Authors@R: 
+    c(
+        person("Sam", "Woodman", role = c("aut", "cre"), email = "sam.woodman@noaa.gov", comment = c(ORCID = "0000-0001-6071-8186"))
+    )
+Description: A utility program ...
+URL: https://github.com/SWFSC/AirPlot/, https://swfsc.github.io/AirPlot/
+BugReports: https://github.com/SWFSC/AirPlot/issues/
+Depends: R (>= 4.1.0)
+Imports: 
+    shiny, 
+    shinydashboard,
+    shinyjs,
+    swfscAirDAS (>= 0.4.0.9000)
+Remotes:
+    SWFSC/swfscAirDAS
+License: Apache License (== 2)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+Config/roxygen2/version: 8.1.1

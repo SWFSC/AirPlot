@@ -1,0 +1,17 @@
+^AirPlot\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^\.travis\.yml$
+^appveyor\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^tic\.R$
+^README\.Rmd$
+^cran-comments\.md$
+^CRAN-RELEASE$
+^\.github$
+^CRAN-SUBMISSION$
+^data-raw$
+^rsconnect$
+^app\.R$
