@@ -1,17 +1,17 @@
-#' Open CruzPlot
+#' Open AirPlot
 #'
-#' Open the CruzPlot utility program, an R Shiny application
+#' Open the AirPlot utility program, an R Shiny application
 #'
 #' @param ... passed directly to [shiny::shinyApp()]
 #'
 #' @examplesIf interactive()
-#' cruzplot_gui()
+#' airplot_gui()
 #'
 #' # To have Shiny listen on a specific port
-#' cruzplot_gui(options = list(launch.browser = TRUE, port = 6305))
+#' airplot_gui(options = list(launch.browser = TRUE, port = 6305))
 #'
 #' @export
-cruzplot_gui <- function(...) {
+airplot_gui <- function(...) {
   ###############################################################################
   ##### Assorted other stuff...
   old <- options()
@@ -20,10 +20,10 @@ cruzplot_gui <- function(...) {
   options("digits" = 5) #for proper display of sighting and effort coordinates
   jscode <- "shinyjs.closeWindow = function() { window.close(); }"
 
-  # Tell the Shiny app where to find the www path, for eg the manual
-  shiny::addResourcePath(
-    "www", system.file("app/www", package = "CruzPlot")
-  )
+  # # Tell the Shiny app where to find the www path, for eg the manual
+  # shiny::addResourcePath(
+  #   "www", system.file("app/www", package = "AirPlot")
+  # )
   # # If the below line is included, the pdf won't display in the app
   # on.exit(shiny::removeResourcePath("www"), add = TRUE)
 
@@ -39,7 +39,7 @@ cruzplot_gui <- function(...) {
   }
 
   ui <- dashboardPage(
-    dashboardHeader(title = "CruzPlot", titleWidth = "200"),
+    dashboardHeader(title = "AirPlot", titleWidth = "200"),
     dashboardSidebar(
       sidebarMenu(
         id = "tabs",
@@ -51,7 +51,7 @@ cruzplot_gui <- function(...) {
           tabName = "display_format", icon = icon("palette")
         ),
         menuItem("Species Information", tabName = "display_spcodes", icon = icon("fish")),
-        menuItem("CruzPlot Manual", tabName = "display_manual", icon = icon("book")),
+        menuItem("AirPlot Manual", tabName = "display_manual", icon = icon("book")),
         # tags$br(),
         numericInput("plot_height", "Map height (pixels)", value = 600, min = 0, step = 100),
         selectInput(
@@ -70,8 +70,8 @@ cruzplot_gui <- function(...) {
         ),
         fileInput("load_app_envir_file", NULL), #, tags$h5("Load workspace")),
         # tags$br(), tags$br(), #tags$br(),
-        actionButton("stop", "Close CruzPlot"),
-        column(12, tags$h5(paste0("CruzPlot v", packageVersion("CruzPlot"))))
+        actionButton("stop", "Close AirPlot"),
+        column(12, tags$h5(paste0("AirPlot v", packageVersion("AirPlot"))))
       ), width = "200"
     ),
     dashboardBody(
@@ -154,19 +154,20 @@ cruzplot_gui <- function(...) {
         mod_display_spcodes_ui("display_spcodes", tab_name = "display_spcodes"),
         tabItem(
           tabName = "display_manual",
-          tags$h5(
-            "The manual can be downloaded through the below window, or from the GitHub repo",
-            tags$a(
-              "at this link",
-              # TODO: change link to production, and update manual to 2.0
-              href = "https://github.com/SWFSC/CruzPlot/blob/modules/inst/app/www/CruzPlot_Manual_app.pdf",
-              target = "_blank"
-            )
-          ),
-          tags$iframe(
-            style = "height:600px; width:100%",
-            src = "www/CruzPlot_Manual_app.pdf"
-          )
+          helpText("Manual todo")
+          # tags$h5(
+          #   "The manual can be downloaded through the below window, or from the GitHub repo",
+          #   tags$a(
+          #     "at this link",
+          #     # TODO: change link to production, and update manual to 2.0
+          #     href = "https://github.com/SWFSC/CruzPlot/blob/modules/inst/app/www/CruzPlot_Manual_app.pdf",
+          #     target = "_blank"
+          #   )
+          # ),
+          # tags$iframe(
+          #   style = "height:600px; width:100%",
+          #   src = "www/CruzPlot_Manual_app.pdf"
+          # )
         )
       )
     )
@@ -180,11 +181,11 @@ cruzplot_gui <- function(...) {
 
     # Quit app
     session$onSessionEnded(function() {
-      stopApp(returnValue = "CruzPlot was closed")
+      stopApp(returnValue = "AirPlot was closed")
     })
     observeEvent(input$stop, {
       js$closeWindow()
-      stopApp(returnValue = "CruzPlot was closed")
+      stopApp(returnValue = "AirPlot was closed")
     })
 
     # Plot height
@@ -195,7 +196,7 @@ cruzplot_gui <- function(...) {
     observeEvent(input$color_style, {
       if (input$color_style == 1) {
         palette("default")
-        c.pal <- cruz.palette.color
+        c.pal <- CruzPlot:::cruz.palette.color
         updateSelectInput(session, NS("map_color")("color_land"), choices = c.pal, selected = "bisque1")
         updateSelectInput(session, NS("map_color")("color_water"), choices = c.pal, selected = "white")
         updateSelectInput(session, NS("map_elements")("grid_col"), choices = c.pal, selected = "black")
@@ -212,7 +213,7 @@ cruzplot_gui <- function(...) {
 
       } else if (input$color_style == 2) {
         palette(gray(0:5/5))
-        c.pal <- cruz.palette.gray
+        c.pal <- CruzPlot:::cruz.palette.gray
         updateSelectInput(session, NS("map_color")("color_land"), choices = c.pal, selected = 4)
         updateSelectInput(session, NS("map_color")("color_water"), choices = c.pal, selected = 0)
         updateSelectInput(session, NS("map_elements")("grid_col"), choices = c.pal, selected = 1)
